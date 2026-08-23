@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 function App() {
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/notes')
+    fetch(`${API_URL}/notes`)
       .then(res => res.json())
       .then(data => setNotes(data));
   }, []);
@@ -14,7 +16,7 @@ function App() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch('http://localhost:5000/notes', {
+    fetch(`${API_URL}/notes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title, content })
