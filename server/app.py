@@ -61,8 +61,9 @@ def delete_note(note_id):
     db.session.commit()
     return {'message': f'Note {note_id} deleted'}, 200
 
+with app.app_context():
+    db.create_all()
+    print(f"Database initialized at: {app.config['SQLALCHEMY_DATABASE_URI']}")
+
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-        print(f"Database initialized at: {app.config['SQLALCHEMY_DATABASE_URI']}")
     app.run(debug=True, port=5000)
